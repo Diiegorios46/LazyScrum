@@ -13,7 +13,7 @@ const Register = () => {
                     <h1 className="text-3xl mb-4 font-bold">Register</h1>
                     <input className="w-full m-4 p-4 border-none rounded shadow-sm" type="text" placeholder="enter your email" />
                     <label htmlFor="">By registering, I accept the Terms of Service and their privacy policy.</label>
-                    <button className="w-1/2 m-4 p-4 border rounded cursor-pointer rounded-full border-none bg-blue-400 text-white text-xl" type="button">Register</button>
+                    <button className="w-1/2 m-4 p-4 border cursor-pointer rounded-full border-none bg-blue-400 text-white text-xl" type="button">Register</button>
                 </form>
                 <div className="flex flex-col justify-center items-center">
                     <span>Do you already have an account?</span>

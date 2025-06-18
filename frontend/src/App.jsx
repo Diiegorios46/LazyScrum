@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/board" element={<Board />} />
-        <Route path="/workspace/:id" element={<Workspace/>} />
+        <Route path="/workspace/:id" element={<Workspace nameWorkSpace={"MyOrganization"} like={"like"}/>} />
       </Routes>
     </Router>
   )
