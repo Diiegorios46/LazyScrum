@@ -13,7 +13,7 @@ const Login = () => {
                     <h1 className="text-3xl mb-4 font-bold">Login</h1>
                     <input className="w-full m-4 p-4 border-none rounded shadow-sm" type="text" placeholder="enter your email" />
                     <label htmlFor="">By registering, I accept the Terms of Service and their privacy policy.</label>
-                    <button className="w-1/2 m-4 p-4 border rounded cursor-pointer rounded-full border-none bg-[#438adb] hover:bg-blue-400 text-xl text-white" type="button">Login</button>
+                    <button className="w-1/2 m-4 p-4 border cursor-pointer rounded-full border-none bg-[#438adb] hover:bg-blue-400 text-xl text-white" type="button">Login</button>
                 </form>
                 <div className="flex flex-col justify-center items-center">
                     <span>Do you not have an account?</span>
