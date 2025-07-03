@@ -1,70 +1,52 @@
-import Nav from '../components/Nav/Nav.jsx';
-import ContainerCardMarkedBoards from "../components/ContainerCardMarkedBoards/ContainerCardMarkedBoards.jsx"
-import ContainerCard from "../components/ContainerCard/ContainerCard.jsx"
-import ContainerMembers from "../components/ContainerMembers/ContainerMembers.jsx"
-import { useState } from 'react';
-
+import TaskCard from "../components/TaskCard/TaskCard";
+import Nav from "../components/Nav/Nav";
+import icono from "../resources/icono.png"
 
 const Board = () => {
-  const [listCard, setlistCard] = useState([
-    {
-      id:1,
-      title:"Card 1",
-      like:"⭐"
-    },
-    {
-      id:2,
-      title:"Card 1",
-      like:"⭐"
-    }
-  ]) 
-
-  const AddCard = () => {
-    setlistCard(prev => [...prev , { id : prev.id + 1 , title: `Card ${prev.length + 1}`,like:"⭐" }] );
-  }
-
   return (
     <>
-      <Nav icon={"https://tse3.mm.bing.net/th/id/OIP.KyR-ljtO0tTD7vLEYz6HvgHaHa?rs=1&pid=ImgDetMain"} name={"Diego Rios"} />
+      <header className="p-4 border-b border-amber-50 mx-auto flex justify-center">
+        <Nav
+          imgIcono={icono}
+          imgPerfil="https://tse4.mm.bing.net/th/id/OIP.F_9kBxukF8upWJEk59U2tAHaHa?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3"
+        />
+      </header>
 
-      <main className='bg-white'>
-        <section className='w-full max-w-7xl mx-auto px-4'>
+      <main className="text-white min-h-screen p-8">
+        <section className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-6">Project Alpha</h1>
 
-          <div className='flex flex-col lg:flex-row'>
-
-            {/* Barra lateral */}
-            <article className='w-full lg:w-3/12 mb-4 lg:mb-0 mt-10'>
-              <div className='flex flex-col gap-4 p-4 bg-[#0077b6] rounded-sm '>
-                <span className='text-center text-2xl text-white border-b-2'>The space work</span>
-                <div className='text-center text-xl shadow-sm w-full rounded-sm text-black bg-white py-2 cursor-pointer'>Diego Rios</div>
-                <div className='text-center text-xl shadow-sm w-full rounded-sm text-black bg-white py-2 cursor-pointer'>Other usuario</div>
-              </div>
-            </article>
-
-            {/* Contenido principal */}
-            <article className='w-full lg:w-9/12'>
-
-            <div className='p-6 text-2xl'>⭐Marked boards</div>
-            <div className='flex justify-between p-4 gap-2'>
-                <ContainerCardMarkedBoards />
-            </div> 
-
-
-              <div className='flex flex-col gap-4 p-4'>
-                <h1 className='text-xl'>📍Your space work</h1>
-                  <div className='bg-[#0077b6] flex rounded-xl'>
-                    <ContainerMembers/>
-                  </div>
-                <ContainerCard listCard={listCard} AddCard={AddCard}/>
-              </div>
-
-            </article>
-
+          {/* Tabs */}
+          <div className="flex space-x-6 border-b border-gray-600 mb-6">
+            <button className="pb-2 text-white font-semibold border-b-2 border-white">
+              To Do
+            </button>
+            <button className="pb-2 text-gray-400 hover:text-white transition">
+              In Progress
+            </button>
+            <button className="pb-2 text-gray-400 hover:text-white transition">
+              Completed
+            </button>
           </div>
+
+          {/* Task cards */}
+          <div className="space-y-4">
+            <TaskCard text="Design the landing page" />
+            <TaskCard text="Create user personas" />
+            <TaskCard text="Conduct user interviews" />
+          </div>
+
+          {/* Add card button */}
+          <div className="mt-8">
+            <button className="bg-[#1e1f1e] hover:bg-[#2a2b2a] px-6 py-2 rounded-full text-white font-semibold shadow">
+              Add a card
+            </button>
+          </div>
+          
         </section>
       </main>
     </>
   );
-}
+};
 
 export default Board;

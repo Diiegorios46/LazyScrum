@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
-    // Método auxiliar privado para formatear respuestas
     private function data($message, $status, $errors = [])
     {
         return [
@@ -32,14 +31,22 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
+            'text' => 'required|string|max:255',
+            'textCard' => 'nullable|string|max:255',
+            'dateCreate' => 'required|date',
+            'dateLimit' => 'nullable|date'
         ]);
 
         if ($validator->fails()) {
             return response()->json($this->data('Error en la validación de los datos', 400, $validator->errors()), 400);
         }
 
-        $task = Task::create($request->only(['title', 'description', 'status']));
+        $task = Task::create([
+            'text' => $request->text,
+            'textCard' => $request->textCard,
+            'dateCreate' => $request->dateCreate,
+            'dateLimit' => $request->dateLimit
+        ]);
 
         if (!$task) {
             return response()->json($this->data('Error al crear la tarea', 500), 500);
@@ -81,14 +88,20 @@ class TaskController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
+            'text' => 'required|string|max:255',
+            'textCard' => 'nullable|string|max:255',
+            'dateCreate' => 'required|date',
+            'dateLimit' => 'nullable|date'
         ]);
 
         if ($validator->fails()) {
             return response()->json($this->data('Error en la validación de los datos', 400, $validator->errors()), 400);
         }
 
-        $task->title = $request->title;
+        $task->text = $request->text;
+        $task->textCard = $request->textCard;
+        $task->dateCreate = $request->dateCreate;
+        $task->dateLimit = $request->dateLimit;
         $task->save();
 
         return response()->json(['message' => "Tarea modificada", 'task' => $task], 200);

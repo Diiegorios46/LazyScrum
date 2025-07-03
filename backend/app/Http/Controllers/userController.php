@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // Método auxiliar privado para formatear respuestas
     private function data($message, $status, $errors = [])
     {
         return [
@@ -34,14 +34,20 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'urlUser' => 'required'
+            'password' => 'required|string|min:3',
+            'language' => 'required|string|max:50'
         ]);
 
         if ($validator->fails()) {
             return response()->json($this->data('Error en la validación de los datos', 400, $validator->errors()), 400);
         }
 
-        $user = Users::create($request->only(['name', 'email', 'urlUser']));
+        $user = Users::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'language' => $request->language
+        ]);
 
         if (!$user) {
             return response()->json($this->data('Error al crear el usuario', 500), 500);
@@ -74,18 +80,19 @@ class UserController extends Controller
         return response()->json($this->data('Usuario eliminado', 200), 200);
     }
 
-    public function update(Request $request , $id){
-
+    public function update(Request $request , $id)
+    {
         $user = Users::find($id);
-        
+
         if(!$user){
-            return response()->json($this->data('No hay usuarios registrados', 200), 200);          
+            return response()->json($this->data('Usuario no encontrado', 404), 404);          
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'urlUser' => 'required|string|max:255'
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'nullable|string|min:6',
+            'language' => 'required|string|max:50'
         ]);
 
         if($validator->fails()){
@@ -93,14 +100,14 @@ class UserController extends Controller
         }
 
         $user->name = $request->name;
-        $user->email =  $user->email;
-        $user->urlUser =  $user->urlUser;
+        $user->email = $request->email;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->language = $request->language;
 
         $user->save();
 
-        return response()->json(['message' => "User modify", 'user' => $user ],200);
-
+        return response()->json(['message' => "Usuario modificado", 'user' => $user ],200);
     }
-
-
 }
