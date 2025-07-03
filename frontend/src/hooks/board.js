@@ -11,13 +11,7 @@ export const useBoard = () =>{
     }
     ]);
 
-    const createBoard = () => {
-        const newBoard = {
-          text : "Marketing Campaign",
-          color : "#efddd5",
-          href : "board"
-        }
-
+    const createBoard = (newBoard) => {
         setColectBoard(prev => [...prev , newBoard]);
         console.log("set el nuevo board")
     }
